@@ -87,7 +87,7 @@
             employees.forEach(employee => {
                 const row = document.createElement('tr');
                 row.innerHTML = `
-                    <td>${employee._id}</td>
+                    <td>${employee._id.substring(employee._id.length - 6)}</td>
                     <td>${employee.name}</td>
                     <td>${employee.email}</td>
                     <td>${employee.birthday}</td>
