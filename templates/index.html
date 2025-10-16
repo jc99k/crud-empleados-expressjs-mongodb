@@ -6,11 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Empleados</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+    <link rel="stylesheet" type='text/css' href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css" />
 </head>
 <body>
     <section class="section">
         <div class="container">
-            <h1 class="title">Empleados</h1>
+            <h1 class="title">Empleados <i class="devicon-express-original"></i> <i class="devicon-mongodb-plain-wordmark"></i></h1>
 
             <div class="columns">
                 <div class="column is-one-third">
@@ -71,6 +72,49 @@
         </div>
     </section>
 
+    <div id="edit-modal" class="modal">
+        <div class="modal-background"></div>
+        <div class="modal-card">
+            <header class="modal-card-head">
+                <p class="modal-card-title">Edit Employee</p>
+                <button class="delete" aria-label="close" onclick="closeModal()"></button>
+            </header>
+            <section class="modal-card-body">
+                <form id="edit-form" method="POST">
+                    <input type="hidden" name="id" id="edit-employee-id">
+                    <div class="field">
+                        <label class="label">Nombre</label>
+                        <div class="control">
+                            <input class="input" type="text" name="name" id="edit-employee-name" required>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="label">Correo Electrónico</label>
+                        <div class="control">
+                            <input class="input" type="email" name="email" id="edit-employee-email" required>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="label">Fecha de Nacimiento</label>
+                        <div class="control">
+                            <input class="input" type="date" name="birthday" id="edit-employee-birthday" required>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="label">Teléfono</label>
+                        <div class="control">
+                            <input class="input" type="tel" name="phone" id="edit-employee-phone" required>
+                        </div>
+                    </div>
+                </form>
+            </section>
+            <footer class="modal-card-foot">
+                <button class="button is-success" onclick="submitEditForm()">Save changes</button>
+                <button class="button" onclick="closeModal()">Cancel</button>
+            </footer>
+        </div>
+    </div>
+
     <script>
         const employeeForm = document.getElementById('form');
         const employeeId = document.getElementById('employee-id');
@@ -78,6 +122,14 @@
         const employeeEmail = document.getElementById('employee-email');
         const employeeBirthday = document.getElementById('employee-birthday');
         const employeePhone = document.getElementById('employee-phone');
+
+        const editModal = document.getElementById('edit-modal');
+        const editForm = document.getElementById('edit-form');
+        const editEmployeeId = document.getElementById('edit-employee-id');
+        const editEmployeeName = document.getElementById('edit-employee-name');
+        const editEmployeeEmail = document.getElementById('edit-employee-email');
+        const editEmployeeBirthday = document.getElementById('edit-employee-birthday');
+        const editEmployeePhone = document.getElementById('edit-employee-phone');
 
         async function fetchEmployees() {
             const response = await fetch('/employees');
@@ -104,12 +156,21 @@
         }
 
         function editEmployee(id, name, email, birthday, phone) {
-            employeeId.value = id;
-            employeeName.value = name;
-            employeeEmail.value = email;
-            employeeBirthday.value = birthday;
-            employeePhone.value = phone;
-            employeeForm.action = `/employees/update/${id}`;
+            editEmployeeId.value = id;
+            editEmployeeName.value = name;
+            editEmployeeEmail.value = email;
+            editEmployeeBirthday.value = birthday;
+            editEmployeePhone.value = phone;
+            editForm.action = `/employees/update/${id}`;
+            editModal.classList.add('is-active');
+        }
+
+        function closeModal() {
+            editModal.classList.remove('is-active');
+        }
+
+        function submitEditForm() {
+            editForm.submit();
         }
 
         fetchEmployees();
