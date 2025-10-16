@@ -55,6 +55,7 @@
                     <table class="table is-fullwidth">
                         <thead>
                             <tr>
+                                <th>ID</th>
                                 <th>Nombre</th>
                                 <th>Correo Electrónico</th>
                                 <th>Fecha de Nacimiento</th>
@@ -86,6 +87,7 @@
             employees.forEach(employee => {
                 const row = document.createElement('tr');
                 row.innerHTML = `
+                    <td>${employee._id}</td>
                     <td>${employee.name}</td>
                     <td>${employee.email}</td>
                     <td>${employee.birthday}</td>
